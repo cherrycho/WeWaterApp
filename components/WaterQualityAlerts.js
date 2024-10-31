@@ -10,7 +10,7 @@ const WaterQualityAlerts = () => {
     const [measure, setMeasure] = useState("bod5");
     const [prediction, setPrediction] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [numColumns, setNumColumns] = useState(1); // State for number of columns
+    const [numColumns, setNumColumns] = useState(1); 
 
     const today = new Date().toISOString().split('T')[0];
 
