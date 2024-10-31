@@ -8,31 +8,41 @@ const { width: screenWidth } = Dimensions.get('window');
 
 const WaterQualityAlerts = () => {
     const [measure, setMeasure] = useState("bod5");
-    const [predictions, setPredictions] = useState([]);
+    const [prediction, setPrediction] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [numColumns, setNumColumns] = useState(1); 
+    const [numColumns, setNumColumns] = useState(1); // State for number of columns
 
     const today = new Date().toISOString().split('T')[0];
 
-    const fetchPredictions = async () => {
+    const fetchPrediction = async () => {
         setLoading(true);
         try {
             const response = await axios.post('http://192.168.1.133:5000/predict', {
                 date: today,
                 measure: measure
             });
-            setPredictions(response.data.predictions);
+    
+            console.log("Response from server:", response.data); // Log the entire response
+    
+            if (response.data.predictions && response.data.predictions.length > 0) {
+                setPrediction(response.data.predictions[0]); // Get the first prediction only
+            } else {
+                setPrediction(null); // No predictions available
+            }
         } catch (error) {
-            console.error("Error fetching predictions:", error);
+            console.error("Error fetching prediction:", error);
+            setPrediction(null); // Handle error case
         } finally {
             setLoading(false);
         }
     };
+    
+    
 
     useEffect(() => {
-        fetchPredictions();
-    }, [measure]);
-
+        fetchPrediction();
+    }, [measure]); // This will fetch a new prediction whenever the measure changes
+    
     const measuresInfo = [
         {
             title: "BOD5",
@@ -54,7 +64,16 @@ const WaterQualityAlerts = () => {
         },
     ];
 
-    const renderItem = ({ item }) => (
+    const renderPrediction = () => (
+        <View style={styles.alertBox}>
+            <Text style={styles.alertText}>
+                {prediction ? `Status: ${prediction.status}` : "No prediction available."}
+            </Text>
+        </View>
+    );
+    
+
+    const renderMeasureInfo = ({ item }) => (
         <View style={styles.card}>
             <Icon name={item.icon} size={40} color="#003366" />
             <Image source={{ uri: item.imageUrl }} style={styles.image} />
@@ -63,24 +82,14 @@ const WaterQualityAlerts = () => {
         </View>
     );
 
-    const renderPrediction = ({ item }) => (
-        <View style={styles.alertBox}>
-            <Text style={styles.alertText}>
-                {item.values[0][2]}
-            </Text>
-        </View>
-    );
-
-    const renderSeparator = () => <View style={styles.separator} />;
-
     const data = [
-        { type: 'instruction', content: "Select a water quality measure and click 'Get Predictions' to see our water body general forecast for today!" },
+        { type: 'instruction', content: "Select a water quality measure and click 'Get Prediction' to see our water body general forecast for today!" },
         { type: 'line', content: null },
         { type: 'date', content: `Today's Date: ${today}` },
         { type: 'location', content: 'Location: Malaysia' },
         { type: 'measurePicker', content: null },
-        { type: 'getPredictionsButton', content: null },
-        { type: 'predictions', content: predictions },
+        { type: 'getPredictionButton', content: null },
+        { type: 'prediction', content: prediction },
         { type: 'note', content: 'Note on Water Quality Measures:' },
         { type: 'measures', content: measuresInfo }
     ];
@@ -110,35 +119,23 @@ const WaterQualityAlerts = () => {
                         </Picker>
                     </>
                 );
-            case 'getPredictionsButton':
+            case 'getPredictionButton':
                 return (
-                    <Button title="Get Predictions" onPress={fetchPredictions} color="#2196F3" />
+                    <Button title="Get Prediction" onPress={fetchPrediction} color="#2196F3" />
                 );
-            case 'predictions':
+            case 'prediction':
                 return loading ? (
                     <Text style={styles.loading}>Loading...</Text>
-                ) : (
-                    predictions.length > 0 ? (
-                        predictions.map((prediction, index) => (
-                            <View key={index} style={styles.alertBox}>
-                                <Text style={styles.alertText}>
-                                    {prediction.values[0][0]}
-                                </Text>
-                            </View>
-                        ))
-                    ) : (
-                        <Text style={styles.loading}>No predictions available.</Text>
-                    )
-                );
+                ) : renderPrediction();
             case 'note':
                 return <Text style={styles.noteTitle}>{item.content}</Text>;
             case 'measures':
                 return (
                     <FlatList
                         data={item.content}
-                        renderItem={renderItem}
+                        renderItem={renderMeasureInfo}
                         keyExtractor={(measure) => measure.title}
-                        numColumns={numColumns} 
+                        numColumns={numColumns}
                         contentContainerStyle={styles.gridContainer}
                         key={`${numColumns}`}
                     />
@@ -153,7 +150,6 @@ const WaterQualityAlerts = () => {
             data={data}
             renderItem={renderItemInFlatList}
             keyExtractor={(item) => item.type}
-            ItemSeparatorComponent={renderSeparator}
             contentContainerStyle={styles.container}
         />
     );
