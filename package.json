@@ -1,0 +1,31 @@
+{
+  "name": "wewaterapp",
+  "version": "1.0.0",
+  "main": "expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.4",
+    "@react-native-picker/picker": "^2.9.0",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/stack": "^6.4.1",
+    "accordion-collapse-react-native": "^1.1.1",
+    "axios": "^1.7.7",
+    "expo": "~51.0.28",
+    "expo-checkbox": "^3.0.0",
+    "expo-image-picker": "^15.0.7",
+    "expo-status-bar": "~1.12.1",
+    "react": "^18.2.0",
+    "react-native": "^0.74.5",
+    "react-native-maps": "^1.18.2",
+    "react-native-vector-icons": "^10.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
+}
