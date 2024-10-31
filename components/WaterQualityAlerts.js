@@ -17,7 +17,7 @@ const WaterQualityAlerts = () => {
     const fetchPrediction = async () => {
         setLoading(true);
         try {
-            const response = await axios.post('http://192.168.1.133:5000/predict', {
+            const response = await axios.post('https://wewaterbackend.onrender.com:10000/predict', {
                 date: today,
                 measure: measure
             });
