@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 const { getWaterQualityData } = require('./mockData');
-const { getBearerToken } = require('./aiWatsonModel'); // Import token function
+const { getBearerToken } = require('./aiWatsonModel'); 
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 10000;
 app.use(bodyParser.json());
 app.use(cors());
 
-const ENDPOINT_URL = "https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/2d63bdbc-fbb8-4deb-b61d-8f2d7c4cfd70/predictions?version=2021-05-01";
+const ENDPOINT_URL = ""; //Endpoint URL Hidden
 
 app.get('/api/water-quality', (req, res) => {
     res.json(getWaterQualityData());
