@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(cors());
 
-const API_KEY = "kMZ2mcfINlkS5bZDtG7awmZFUU43WzKY3GoduUI2sHCS";
-const ENDPOINT_URL = "https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/2d63bdbc-fbb8-4deb-b61d-8f2d7c4cfd70/predictions?version=2021-05-01";
+const API_KEY = ""; //API Key hidden
+const ENDPOINT_URL = ""; //Endpoint URL hidden
 
 async function getBearerToken() {
     const iamUrl = "https://iam.cloud.ibm.com/identity/token";
