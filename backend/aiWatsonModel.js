@@ -6,15 +6,12 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
-// API key and endpoint URL
 const API_KEY = "kMZ2mcfINlkS5bZDtG7awmZFUU43WzKY3GoduUI2sHCS";
 const ENDPOINT_URL = "https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/2d63bdbc-fbb8-4deb-b61d-8f2d7c4cfd70/predictions?version=2021-05-01";
 
-// Function to get Bearer token
 async function getBearerToken() {
     const iamUrl = "https://iam.cloud.ibm.com/identity/token";
     const response = await axios.post(iamUrl, null, {
