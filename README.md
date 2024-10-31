@@ -12,34 +12,32 @@ WeWater is a mobile application designed to provide real-time information about 
 
 ## Features
 - Real-time water quality tracking and feedback system
-- User education on water purification and sanitation
-- Community engagement through reporting water quality issues
+- User education cards on water purification and sanitation
+- Community engagement through reporting water quality issues (feedback form)
 - Integration with IBM Watson for data prediction
 
 ## Technologies Used
 - **Frontend**: React Native
 - **Backend**: Node.js, Express
-- **Database**: MongoDB
 - **Machine Learning**: IBM Watson
 - **Deployment**: Render.com for the backend
+- **Dataset**: https://data.gov.my/data-catalogue/water_pollution_basin
 
 ## Setup Instructions
 
 ### Prerequisites
 - Node.js installed on your machine
-- MongoDB account or local MongoDB server
-- IBM Watson account for machine learning model
+- IBM Watson & Cloud account for machine learning model
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/cherrycho/OurWatertest.git
+git clone https://github.com/cherrycho/WeWaterApp.git
 cd OurWatertest
 ```
 
 ### Install Dependencies
 For the frontend:
 ```bash
-cd frontend
 npm install
 ```
 
@@ -58,7 +56,7 @@ node server.js
 
 To start the frontend:
 ```bash
-cd frontend
+cd WeWaterApp
 npm start
 ```
 
@@ -79,10 +77,10 @@ npm start
 7. Click "Create Web Service" to deploy your backend.
 
 ### Frontend Deployment
-For deploying the frontend, consider using services like Expo for hosting the mobile app.
+For deploying the frontend, use services like Expo (what I use) for hosting the mobile app.
 
 ## Usage
-Once both the frontend and backend are running, you can access the app on your mobile device or emulator. The app allows users to input water quality data and receive predictions and recommendations based on the results.
+Once both the frontend and backend are running, you can access the app on your mobile device or emulator. The app allows users to input water quality data and receive predictions and recommendations based on the results. Users are also able to submit a feedback of real-time local water data.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you would like to contribute to the project.
